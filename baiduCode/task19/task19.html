@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #show{
+            margin-top: 20px;
+            height: 200px;
+            background: beige;
+            align-items: flex-end;
+            display: flex;
+        }
+        #show ul{
+            font-size:5px;
+        }
+        li {
+            display: inline-block;
+            background-color: red;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-right: 5px;
+            vertical-align: bottom;
+            width: 5px;
+        }
+    </style>
+</head>
+<body>
+<input type="text" id="aqi-input"><br/><br/>
+<div id="btn-group">
+
+    <input type="button" value="左侧入" id="left-in">
+    <input type="button" value="右侧入" id="right-in">
+    <input type="button" value="左侧出" id="left-out">
+    <input type="button" value="右侧出" id="right-out">
+    <input type="button" value="排序" id="sort-btn">
+
+</div>
+
+<div id="show" >
+    <ul></ul>
+</div>
+<script type="text/javascript">
+    //先获取所有节点
+    var left_in_btn=document.getElementById('left-in');
+    var right_in_btn=document.getElementById('right-in');
+    var left_out_btn=document.getElementById('left-out');
+    var right_out_btn=document.getElementById('right-out');
+    var oInput = document.getElementById('aqi-input');
+    var sortBtn = document.getElementById('sort-btn');
+    var oShow = document.getElementById('show');
+    var ul = document.getElementsByTagName('ul')[0];
+
+    //用来存放输入的数字
+    var aqiData = [];
+
+    //获取输入框数字
+    function getInput(){
+        var input = oInput.value;
+        if(!/^\s*\d+\s*$/.test(input)){
+            alert('输入的不是合法的数字');
+            input.focus();
+            return false;
+        }
+        input = input.trim();
+        if(input<10 ||input>100) {
+            alert('请输入10-100的数字！');
+            return false;
+        }
+        if(aqiData.length>=60){
+            alert('输入超过60个限制');
+            return false;
+        }
+        return input;
+    }
+
+    //左侧入
+    function insertLeft(){
+        var inputText = getInput();
+        if(inputText ===false){
+            return ;
+        }
+        aqiData.unshift(inputText);
+        console.log(aqiData);
+        //renderChart();
+    }
+
+    //右侧入
+    function insertRight(){
+        var inputText = getInput();
+        if(inputText ===false){
+            return ;
+        }
+        aqiData.push(inputText);
+
+    }
+    //左侧出
+    function deleteLeft(){
+        if(aqiData.length===0){
+            alert('没有元素可以删除了！');
+            return false;
+        }
+        alert(aqiData[0]);
+        aqiData.shift();
+    }
+
+    //右侧出
+    function deleteRight(){
+        if(aqiData.length===0){
+            alert('没有元素可以删除了！');
+            return false;
+        }
+        alert(aqiData[aqiData.length-1]);
+        aqiData.pop();
+    }
+
+    //渲染图表
+    function renderChart(){
+       // var aqiData=[14,23,18,56,30];
+        ul.innerHTML = '';
+        for(var i = 0;i<aqiData.length;i++){
+            ul.innerHTML += "<li style =" +'"height:' +2*aqiData[i]+'px;"'+"<li/>";
+        }
+    }
+
+    //排序
+    function sort(){
+        aqiData.sort();
+    }
+
+    left_in_btn.onclick = function(){
+        insertLeft();
+        renderChart();
+    }
+    right_in_btn.onclick = function(){
+        insertRight();
+        renderChart();
+    }
+    left_out_btn.onclick = function (){
+
+        deleteLeft();
+       // console.log(aqiData);
+        renderChart();
+    }
+
+    right_out_btn.onclick = function (){
+        deleteRight();
+        renderChart();
+    }
+    sortBtn.onclick = function(){
+        sort();
+        renderChart();
+    }
+
+</script>
+</body>
+</html>

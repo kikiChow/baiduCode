@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            display: flex;
+            border: solid 1px #000;
+            width: 1000px;
+            height: 300px;
+            margin: 0 auto;
+            justify-content:center;
+            margin-top: 30px;
+        }
+        .container div{
+            display: flex;
+            height: 80%;
+            width: 50%;
+            margin: 0 3%;
+
+            border: solid 1px #000;
+            align-items: center;
+            justify-content:center;
+        }
+        #btn-container{
+            margin-top: 50px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div id="btn-container">
+        <button id="front">前序</button>
+        <button id="mid">中序</button>
+        <button id="back">后序</button>
+    </div>
+<script type="text/javascript">
+    var container = document.getElementById('container');
+    var btnFront =  document.getElementById('front');
+    var btnMid =  document.getElementById('mid');
+    var btnBack =  document.getElementById('back');
+
+    var arr = [];
+    var flag = false;
+    var timer;
+
+    //先序遍历算法
+    function preOrder(node){
+        if(node){
+            arr.push(node);
+            preOrder(node.firstElementChild);
+            preOrder(node.lastElementChild);
+        }
+    }
+
+    //中序遍历算法
+    function inOrder(node) {
+        if(node){
+            inOrder(node.firstElementChild);
+            arr.push(node);
+            inOrder(node.lastElementChild);
+        }
+    }
+
+    //后序遍历算法
+    function postOrder(node) {
+        if(node){
+            postOrder(node.firstElementChild);
+            postOrder(node.lastElementChild);
+            arr.push(node);
+        }
+    }
+
+    //渲染动画
+    function render(){
+        var i = 0;
+        arr[i].style.backgroundColor = 'pink';
+        timer = setInterval(function(argument){
+            i++;
+            if(i<arr.length){
+                arr[i-1].style.backgroundColor = 'white';
+                arr[i].style.backgroundColor = 'pink';
+
+            }else{
+                clearInterval(timer);
+                arr[arr.length-1].style.backgroundColor ='white';
+            }
+
+        },500);
+    }
+    //  初始化
+    function reset(){
+        arr = [];
+        var divs = document.getElementsByTagName('div');
+        clearInterval(timer);
+        for(var i = 0;i<divs.length;i++){
+            divs[i].style.backgroundColor = '#fff';
+        }
+    }
+
+    //给按钮绑定事件
+    btnFront.onclick = function(){
+        reset();
+        preOrder(container);
+        render();
+    }
+
+    btnMid.onclick = function(){
+        reset();
+        inOrder(container);
+        render();
+    }
+    btnBack.onclick = function(){
+        reset();
+        postOrder(container);
+        render();
+    }
+</script>
+</body>
+</html>

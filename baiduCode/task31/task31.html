@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0 auto;
+            font-size: 20px;
+        }
+        #outSchool{
+            margin-left: 20px;
+        }
+        #container{
+            margin-left: 50px;
+            margin-top: 50px;
+        }
+        #select-container{
+            margin-left: 50px;
+            margin-top: 50px;
+        }
+        #select1{
+            margin-left: 20px;
+            height: 30px;
+        }
+        #select2{
+            margin-left: 50px;
+            height: 30px;
+        }
+        #workPlace{
+            margin-left: 20px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+   <div id="container">
+       <input type="radio" value="在校生"  name="radioSelect" id='inSchool'>在校生
+       <input type="radio" value="非在校生"  name="radioSelect" id="outSchool">非在校生
+   </div>
+    <div id="select-container">
+        学校
+        <select id="select1">
+            <option value="bj" id="bj">北京</option>
+            <option value="sh" id="sh">上海</option>
+            <option value="nj" id="nj">南京</option>
+        </select>
+        <select id="select2">
+            <option value="bd" >北京大学</option>
+            <option value="qh">清华大学</option>
+            <option value="bh">北京航空大学</option>
+        </select>
+    </div>
+    <script type="text/javascript">
+        window.onload = function(){
+            var inSchool = document.getElementById('inSchool');
+            var outSchool = document.getElementById('outSchool');
+
+            var selectContainer = document.getElementById('select-container');
+
+
+            //跨浏览器事件绑定
+            function addEventHandler(ele, event, hanlder) {
+                if (ele.addEventListener) {
+                    ele.addEventListener(event, hanlder, false);
+                } else if (ele.attachEvent) {
+                    ele.attachEvent("on"+event, hanlder);
+                } else  {
+                    ele["on" + event] = hanlder;
+                }
+            }
+
+            //绑定事件
+            inSchool.onclick = function(){
+                selectContainer.innerHTML = '';
+                selectContainer.innerHTML = '学校<select id="select1"><option value="bj" id="bj">北京</option><option value="sh" id="sh">上海</option><option value="nj" id="nj">南京</option></select> <select id="select2"><option value="bd" >北京大学</option><option value="qh">清华大学</option><option value="bh">北京航空大学</option></select>'
+                var select2 = document.getElementById('select2');
+                var select1 = document.getElementById('select1');
+                addEventHandler(select1,'change',function(){
+                    if(this.value=='bj'){
+                        select2.innerHTML = '';
+                        select2.innerHTML = '<option value="bd" >北京大学</option><option value="qh">清华大学</option><option value="bh">北京航空大学</option>';
+                    }
+                    if(this.value=='sh'){
+                        select2.innerHTML = '';
+                        select2.innerHTML = '<option value="fd" >复旦大学</option><option value="tj">同济大学</option><option value="sj">上海交通大学</option>';
+                    }
+                    if(this.value=='nj'){
+                        select2.innerHTML = '';
+                        select2.innerHTML = '<option value="nd" >南京大学</option><option value="dn">东南大学</option><option value="nl">南京理工大学</option>';
+                    }
+                });
+            }
+            outSchool.onclick = function(){
+                selectContainer.innerHTML = '';
+                selectContainer.innerHTML = '就业单位<input type="text" id="workPlace">'
+                var select2 = document.getElementById('select2');
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

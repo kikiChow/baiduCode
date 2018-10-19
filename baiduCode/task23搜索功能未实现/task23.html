@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style >
+        *{
+            font-size: 10px;
+        }
+        div{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid;
+            background-color: #fff;
+        }
+        #big{
+            border: none;
+        }
+        #choose{
+            margin-top:30px;
+        }
+        .one{
+            width: 1600px;
+            height: 500px;
+            margin: 0 auto;
+            border-color: gray;
+        }
+        .two{
+            height:400px ;
+            border-color:lightsteelblue;
+        }
+        .fruit{width: 700px;}
+        .note{width: 700px;}
+        .fish{width: 50px;}
+        .three{
+            height: 300px;
+            border-color:darkgreen;
+        }
+        .apple{width: 350px;}
+        .phone{width: 50px;}
+        .human{width: 300px;}
+        .program{width: 300px;}
+        .blank{width: 150px}
+        .four{
+            height: 200px;
+            border-color:orangered;
+        }
+        .peor{width: 50px;}
+        .pig{width: 50px;}
+        .cola{width: 50px;}
+        .soccer{width: 50px;}
+        .book{width: 50px;}
+        .school{width: 50px;}
+        .code{width: 50px;}
+        .operate{width: 50px;}
+        .man{width: 50px;}
+        .bement{width: 130px;}
+        .glass{width: 50px;}
+        .five{
+            height: 100px;
+            border-color:#ffff00;
+        }
+        .cot{width: 50px;}
+
+
+    </style>
+</head>
+<body>
+    <div id="big">
+        <div class="one" id="super">
+            super
+            <div class="two fruit" id="fruit">
+                fruit
+                <div class="three apple" id="apple">
+                    apple
+                    <div class="four peor" id="peor">peor</div>
+                    <div class="four pig" id="pig" >pig</div>
+                    <div class="four cola"  id="cola">cola</div>
+                    <div class="four soccer"  id="soccer">soccer</div>
+                </div>
+                <div class="three phone"  id="phone">
+                    phone
+                </div>
+                <div class="three blank">
+                    <div class="four book"  id="book">book</div>
+                    <div class="four school"  id="school">school</div>
+                </div>
+            </div>
+            <div class="two note"  id="note">
+                note
+                <div class="three human"  id="human">
+                    human
+                    <div class="four code"  id="code">code</div>
+                    <div class="four operate"  id="operate">operate</div>
+                    <div class="four man"  id="man">man</div>
+                </div>
+                <div class="three program" id="program" >
+                    program
+                    <div class="four bement" id="bement">
+                        bement
+                        <div class="five cot" id="cot">cot</div>
+                    </div>
+                    <div class="four glass" id="glass">glass</div>
+                </div>
+            </div>
+            <div class="two fish" id="fish">
+                fish
+            </div>
+        </div>
+    </div>
+
+
+    <fieldset id="choose">
+        <button id="DF">深度遍历</button>
+        <button id="BF">广度遍历</button>
+        <input type="text" id="search"><button id="searchBtn">开始查询</button>
+    </fieldset>
+
+<script type="text/javascript">
+    window.onload = function(){
+        var arr = [];
+        var text = '';
+        var index = 0;
+        var timer;
+        var searchNode;
+
+        var father = document.getElementById('container');
+        var two = document.getElementById('two');
+        var btnDF = document.getElementById('DF');
+        var btnBF = document.getElementById('BF');
+        var searchBtn = document.getElementById('searchBtn');
+        var searchText = document.getElementById('search');
+
+        //深度优先遍历
+        function traverseDF(node){
+            if(!node){
+                return;
+            }else{
+                arr.push(node);
+                var childs = node.children;
+                for(var i =0;i<childs.length;i++){
+                    traverseDF(childs[i]);
+                }
+            }
+        }
+
+        //广度优先遍历
+        function traverseBF(node){
+            if(!node){
+                return;
+            }else{
+                arr.push(node);
+               // console.log(arr.length);
+                traverseBF(node.nextElementSibling);
+
+                node = arr[index++];
+                traverseBF(node.firstElementChild);
+            }
+        }
+
+        //初始化
+        function reset(){
+            var divs = document.getElementsByTagName('div');
+            arr = [];
+            clearInterval(timer);
+            for(var i = 0;i<arr.length;i++){
+                arr[i].style.backgroundColor = 'white';
+            }
+        }
+
+        //渲染
+        function render(){
+            var i = 0;
+            arr[i].style.backgroundColor = 'pink';
+            timer = setInterval(function(argument){
+                i++;
+                if(i<arr.length){
+                    arr[i-1].style.backgroundColor = 'white';
+                    arr[i].style.backgroundColor = 'pink';
+                }else{
+                    clearInterval(timer);
+                    arr[arr.length-1].style.backgroundColor = 'white';
+                }
+            },1000);
+        }
+        //查询
+        var tag = true;
+        function search(tree,content){
+           if(tree.innerHTML !=content){
+               arr.push(tree);
+               for(var i =0;i<tree.children.length;i++){
+                   search(tree.children[i],content);
+               }
+           }else if(tree.innerHTML ===content){
+               arr.push(tree);
+               tag = false;
+               return;
+           }
+        }
+
+
+
+        //绑定按钮事件
+        btnDF.onclick = function (){
+            reset();
+            traverseDF(father);
+            render();
+        }
+        btnBF.onclick = function (){
+            reset();
+            traverseBF(father);
+            render();
+        }
+        searchBtn.onclick = function(){
+            var content = searchText.value;
+            search(father,content);
+            render();
+
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

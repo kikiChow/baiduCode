@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="container">
+        <h1>表单配置</h1>
+        <textarea id="config1">{
+            "name":{
+                "id":"name1",
+                "label":"姓名",
+                "type":"text",
+                 validator: function () {...},
+                 rules: '必填，长度为4-16个字符',
+                 success: '格式正确',
+                 fail: '名称不能为空'
+                 }，
+            "submit":{
+                "id":"validate1",
+                "value":"验证",
+                "type":"button",
+                "fail":"提交失败",
+                "success":"提交成功"
+                }
+            }
+        </textarea>
+    </div>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

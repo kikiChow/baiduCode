@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #show{
+            margin-top: 20px;
+            height: 50px;
+            background: beige;
+            align-items: flex-end;
+            display: flex;
+        }
+        #show ul{
+            font-size:10px;
+        }
+        li{
+            display: inline-block;
+            background-color: red;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-right: 5px;
+            vertical-align: bottom;
+            height:30px;
+        }
+        span{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div id="ctrl">
+    <textarea id="aqi-input"> </textarea>
+    <input type="button" value="添加" id="right-in">
+    <input type="button" value="删除" id="right-out">
+    <input type="text" id="key_word">
+    <button id="find_word">查找</button>
+</div>
+<div id="show">
+    <ul></ul>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var right_in_btn=document.getElementById('right-in');
+        var right_out_btn=document.getElementById('right-out');
+        var searchBtn = document.getElementById('find_word');
+        var oInput = document.getElementById('aqi-input');
+        var ul = document.getElementsByTagName('ul')[0];
+        //aqiData用来暂存输入
+        var aqiData = [];
+
+        //输入
+        function getInput(){
+           // var input = 'zhou,周安琪 134';
+            var input = oInput.value.trim();
+            var txt = input.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/).filter(function(e) {
+                if (e != null && e.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            aqiData = aqiData.concat(txt);
+           // console.log(aqiData);
+        }
+
+        //删除数据
+        function deleteRight(){
+            if(aqiData.length===0){
+                alert('没有元素可以删除了！');
+                return false;
+            }
+            alert(aqiData[aqiData.length-1]);
+            aqiData.pop();
+        }
+
+        //匹配
+        function search(str){
+            var key = document.getElementById('key_word').value.trim();
+            if(key.length == 0) return ;
+            for(var i = 0;i<aqiData.length;i++){
+                if(!aqiData[i].indexOf(key)){
+                    ul.children[i].style.background = 'green';
+                }
+            }
+        }
+        //渲染图表
+        function renderChart(){
+            ul.innerHTML = '';
+            for(var i = 0;i<aqiData.length;i++){
+                ul.innerHTML += '<li style="width:'+aqiData*2+'px;">'+aqiData[i]+'</li>';
+            }
+        }
+
+        //绑定添加单击事件
+        right_in_btn.onclick = function(){
+            //insertRight();
+            getInput();
+            renderChart();
+        }
+        //绑定删除事件
+        right_out_btn.onclick = function (){
+         deleteRight();
+         renderChart();
+         }
+
+        //绑定查询事件
+        searchBtn.onclick = function () {
+            var key = document.getElementById('key_word').value.trim();
+            search(key);
+        }
+    }
+</script>
+</body>
+
+</html>

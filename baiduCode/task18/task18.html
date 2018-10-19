@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        li {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding-left: 8px;
+            padding-right: 8px;
+            height: 30px;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <input type="text" id="aqi-input">
+    <div id="btn-group">
+        <input type="button" value="左侧入" id="left-in">
+        <input type="button" value="右侧入" id="right-in">
+        <input type="button" value="左侧出" id="left-out">
+        <input type="button" value="右侧出" id="right-out">
+    </div>
+
+    <div id="show" >
+        <ul></ul>
+    </div>
+
+    <script type="text/javascript">
+
+            var left_in_btn=document.getElementById('left-in');
+            var right_in_btn=document.getElementById('right-in');
+            var left_out_btn=document.getElementById('left-out');
+            var right_out_btn=document.getElementById('right-out');
+            var oInput = document.getElementById('aqi-input');
+            //var oShow = document.getElementById('show');
+            var ul = document.getElementsByTagName('ul')[0];
+
+            left_in_btn.onclick = function(){
+                if(oInput.value.length <=0){
+                    alert('输入为空');
+                    return false;
+                }
+                var newNode = document.createElement('li');
+                newNode.innerHTML=oInput.value;
+                ul.insertBefore(newNode,ul.firstChild);
+                oInput.value = null;
+            }
+
+            right_in_btn.onclick = function(){
+                if(oInput.value.length<=0){
+                    alert('输入为空');
+                    return false;
+                }
+                var newNode = document.createElement('li');
+                newNode.innerHTML=oInput.value;
+                ul.appendChild(newNode);
+                oInput.value = null;
+            }
+
+            left_out_btn.onclick = function(){
+                if(ul.hasChildNodes()){
+                    alert(ul.firstChild.innerHTML);
+                    ul.removeChild(ul.firstChild)
+                }else{
+                    alert('队列为空');
+                    return false;
+                }
+            }
+
+            right_out_btn.onclick = function(){
+                if(ul.hasChildNodes()){
+                    alert(ul.lastChild.innerHTML);
+                    ul.removeChild(ul.lastChild)
+                }else{
+                    alert('队列为空');
+                    return false;
+                }
+            }
+    </script>
+</body>
+</html>

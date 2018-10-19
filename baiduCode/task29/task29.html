@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        *{ font-size:20px;}
+        #input{width: 200px;height: 20px;border-radius:5px;}
+    </style>
+</head>
+<body>
+
+    名称  <input type="text" id="input" > <button id="btn"style="background: lightsteelblue;border-radius:5px;">验证</button>
+    <div id="tips" class="remind">必填，长度为4-16个字符</div>
+</body>
+<script type="text/javascript">
+        function strLen(str){
+            var len = 0;
+            for (var i=0; i<str.length; i++) {
+                var c = str.charCodeAt(i);
+                //单字节加1
+                if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+                    len++;
+                }
+                else {
+                    len+=2;
+                }
+            }
+            return len;
+        }
+        btn.onclick = function (){
+            var name = document.getElementById('input');
+            //alert(name.value);
+            var tips = document.getElementById('tips');
+            var btn = document.getElementById('btn');
+            //去除了所有标点空格
+            var txt = name.value.replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g,"");
+            var txtLen = strLen(txt);
+
+           //alert(txtLen);
+            if(txtLen ==0){
+                tips.textContent = '姓名不能为空';
+                tips.style.color = 'red';
+                name.style.borderColor = 'red';
+
+            }else if( txtLen>=4 &&txtLen<17){
+                tips.textContent = '名称格式正确';
+                tips.style.color = 'green';
+                name.style.borderColor = 'green';
+            } else{
+                tips.textContent = '必填，长度为4~16个字符';
+                tips.style.color = 'gray';
+                name.style.borderColor = 'gray';
+            }
+        }
+</script>
+</html>

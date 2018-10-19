@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            font-size: 20px;
+        }
+        #container{
+            margin: 0 auto;
+        }
+        input{
+            margin-top: 30px;
+        }
+        button{
+            width: 100px;
+            height: 40px;
+            margin-left: 194px;
+            margin-top: 10px;
+            background-color: cornflowerblue;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        名称   <input type="text" id="name"><br/>
+        <p id="h1"></p>
+        密码   <input type="password" id="password"><br/>
+        <p id="h2"></p>
+        密码确认<input type="password" id="passwordAgain"><br/>
+        <p id="h3"></p>
+        邮箱   <input type="text" id="email"><br/>
+        <p id="h4"></p>
+        手机   <input type="text" id="phone"><br/>
+        <p id="h5"></p>
+        <button id="btn">提交</button>
+    </div>
+<script type="text/javascript">
+    window.onload = function(){
+
+        var name = document.getElementById('name');
+        var password = document.getElementById('password');
+        var passwordAgain = document.getElementById('passwordAgain');
+        var email = document.getElementById('email');
+        var phone = document.getElementById('phone');
+        var h1 = document.getElementById('h1');
+        var h2 = document.getElementById('h2');
+        var h3 = document.getElementById('h3');
+        var h4 = document.getElementById('h4');
+        var h5 = document.getElementById('h5');
+        var btn = document.getElementById('btn');
+        var flag1,flag2,flag3,flag4,flag5= false;
+
+
+        //名称的验证
+        function checkName(str){
+            if(str.length>3&&str.length<17){
+                h1.innerHTML='';
+                h1.innerHTML = '名称可用';
+                h1.style.color = 'green';
+                name.style.borderColor = 'green';
+                flag1 = true;
+            }else{
+                h1.innerHTML='';
+                h1.innerHTML = '名称格式有误';
+                name.style.borderColor = 'red';
+                h1.style.color='red';
+            }
+        }
+
+        //密码验证
+        function checkPassword(str){
+            var passwordPattern = /^[a-zA-Z0-9]{4,16}$/;
+            var result =  passwordPattern.test(str);
+            if(result){
+                h2.innerHTML='';
+                h2.innerHTML = '密码可用';
+                h2.style.color = 'green';
+                password.style.borderColor = 'green';
+                flag2 = true;
+            }else{
+                h2.innerHTML='';
+                h2.innerHTML = '密码不可用';
+                h2.style.color = 'red';
+                password.style.borderColor = 'red';
+            }
+        }
+
+        //密码确认验证
+        function checkPasswordAgain(str){
+            if(str==password.value){
+                h3.innerHTML = ''
+                h3.innerHTML = '密码输入一致';
+                h3.style.color = 'green';
+                passwordAgain.style.borderColor = 'green';
+                flag3 = true;
+            }else{
+                h3.innerHTML='';
+                h3.innerHTML = '密码输入不一致 ';
+                h3.style.color = 'red';
+                passwordAgain.style.borderColor = 'red';
+            }
+        }
+
+
+        //邮箱验证
+        function checkEmail(str){
+            var emailReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+            if(emailReg.test(str)){
+                h4.innerHTML = '';
+                h4.innerHTML = '邮箱格式正确';
+                h4.style.color = 'green';
+                email.style.borderColor = 'green';
+                flag4 = true;
+            }else{
+                h4.innerHTML='';
+                h4.innerHTML = '邮箱格式不正确 ';
+                h4.style.color = 'red';
+                email.style.borderColor = 'red';
+            }
+        }
+
+        //号码验证
+        function checkPhone(str){
+            var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+            if(phoneReg.test(str)){
+                h5.innerHTML = '';
+                h5.innerHTML = '手机格式正确';
+                h5.style.color = 'green';
+                phone.style.borderColor = 'green';
+                flag5 = true;
+            }else{
+                h5.innerHTML='';
+                h5.innerHTML = '手机格式不正确 ';
+                h5.style.color = 'red';
+                phone.style.borderColor = 'red';
+            }
+        }
+         //光标锁定绑定事件
+
+        //part1名称部分
+        name.onfocus = function(){
+            h1.innerHTML = '名称不能为空！';
+            h1.style.borderColor = 'blue';
+        }
+        name.onblur = function(){
+            h1.innerHTML = '';
+            checkName(name.value);
+        }
+
+        //part2密码部分
+        password.onfocus = function (){
+            h2.innerHTML = '必填，密码为4-16的字母数字！';
+            h2.style.borderColor = 'blue';
+        }
+        password.onblur = function (){
+            h2.innerHTML ='';
+            checkPassword(password.value);
+        }
+
+        //part3密码确认部分
+        passwordAgain.onfocus = function (){
+            h3.innerHTML = '再次输入相同密码！';
+            h3.style.borderColor = 'blue';
+        }
+        passwordAgain.onblur = function (){
+            h3.innerHTML ='';
+            checkPasswordAgain(passwordAgain.value);
+        }
+
+        //part4邮箱部分
+        email.onfocus = function (){
+            h4.innerHTML = '填写正确的邮箱格式！';
+            h4.style.borderColor = 'blue';
+        }
+        email.onblur = function (){
+            h4.innerHTML ='';
+            checkEmail(email.value);
+        }
+
+        //part5手机部分
+        phone.onfocus = function (){
+            h5.innerHTML = '填写正确的手机号码！';
+            h5.style.borderColor = 'blue';
+        }
+        phone.onblur = function (){
+            h5.innerHTML ='';
+            checkPhone(phone.value);
+        }
+
+        btn.onclick = function(){
+            if(flag1 ===true& flag2 ===true& flag3===true & flag4 ===true & flag5 ===true){
+                alert('提交成功！');
+            }else{
+                alert('提交失败！');
+            }
+        }
+
+
+    }
+</script>
+</body>
+</html>

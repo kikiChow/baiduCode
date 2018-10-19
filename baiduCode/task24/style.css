@@ -1,0 +1,46 @@
+  .container{
+            font-size: 18px;
+        }
+        h2{
+            text-align: center;
+        }
+        p{
+            height: 30px;
+            margin: 0;
+        }
+        .btn_container{
+            margin: 0 auto;
+            width: 760px;
+        }
+        /*.main{*/
+            /**/
+        /*}*/
+        .main{
+            margin-top: 20px;
+        }
+        .parent{
+           border: 1px solid #000;
+            margin: 0 20px auto;
+            padding: 20px;
+        }
+        .child_1{
+            display: inline-flex;
+            border: 1px solid red;
+            margin: 0 20px 30px 20px;
+        }
+
+        .child_2{
+            display: inline-flex;
+            border: 1px solid darkgreen;
+            margin: 20px 20px 20px 20px;
+
+        }
+        .child_2:last-child {
+            margin-right: 20px;
+        }
+        .child_3{
+            display: inline-flex;
+            border: 1px solid deepskyblue;
+            margin: 20px 20px 20px 20px;
+
+        }
